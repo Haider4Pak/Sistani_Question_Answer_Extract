@@ -3,9 +3,10 @@
 [![Tawzeeh ul Masail App](https://play-lh.googleusercontent.com/RNryEQ3VjBNeo6Mqi9-pd5kgbVK5iqd7R9fn1Nthc-W_nXY_UXKU8gEJM5BZNxiVyQ=w240-h480)](https://play.google.com/store/apps/details?id=com.haiderart.sistanitauzeehulmasail)
 
 ## Sistani Q&A Text Extractor سیستانی سوال جواب
+Link to check [Haiderart.com/Sistani_Text_Extract](https://haiderart.com/sistani_text_extract.html)
 
-If you need to extract text from a sistani.org website, here's a simple guide on how to do it using your web browser's developer tools.
 ### Extracting Content from a Website - Step-by-Step Guide
+If you need to extract text from a sistani.org website, here's a simple guide on how to do it using your web browser's developer tools.
 
 ## Instructions:
 1. **Navigate to the Website:** Open your preferred web browser and visit the URL you provided. You can choose from various languages like Urdu, Arabic, English, Persian, French, Turkish, Azari, etc. Some examples:
