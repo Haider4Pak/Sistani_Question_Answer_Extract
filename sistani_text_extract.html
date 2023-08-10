@@ -2,7 +2,9 @@
 <html>
 <head>
   <title>Sistani Web Text Extractor</title>
-	    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+      <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+	   <link rel="shortcut icon" href="https://www.sistani.org/favicon.ico" type="image/x-icon">
+	  <link rel="icon" href="https://www.sistani.org/favicon.ico" type="image/x-icon">
    <style>
     body {
       font-family: Arial, sans-serif;
@@ -58,7 +60,8 @@
 <center><h1>Sistani Q&A Text Extractor</h1></center>
   <textarea id="input-code" rows="15" placeholder="Copy <div id=main-qa-content> from sistani.org Question Answer section and paste here..." ></textarea>
   <button id="extract-button">Text Extract</button>
-  
+    <button id="clear-button">Clear</button>
+
   <div id="output-container">Output here</div><br>
   <button id="copy-button">Copy to Clipboard</button>
   
@@ -135,6 +138,11 @@
         outputText.innerHTML = extractedText;
         outputContainer.appendChild(outputText);
       }
+    });
+	
+	 document.getElementById("clear-button").addEventListener("click", function () {
+      // Clear the textarea content
+      document.getElementById("input-code").value = "";
     });
 
     document.getElementById("copy-button").addEventListener("click", function () {
