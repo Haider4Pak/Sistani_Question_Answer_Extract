@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistani Web Text Extractor</title>
+   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #output-container {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+      background-color: #f9f9f9;
+    }
+	
+  </style>
+</head>
+<body>
+
+<div class="container">
+<center><h1>Sistani Q&A Text Extractor</h1></center>
+  <textarea id="input-code" rows="15" placeholder="Copy <div id=main-qa-content> from sistani.org Question Answer section and paste here..." ></textarea>
+  <button id="extract-button">Text Extract</button>
+  
+  <div id="output-container">Output here</div><br>
+  <button id="copy-button">Copy to Clipboard</button>
+  
+  <br>
+  <br>
+  <h3>Instructions:</h3>
+  <ol>
+<li>
+<p><strong>Navigate to the Website:</strong> Open your preferred web browser and visit the URL you provided, such as <a href="https://www.sistani.org/urdu/qa/" target="_new">https://www.sistani.org/urdu/qa/</a>&nbsp;or&nbsp;<a href="https://www.sistani.org/arabic/qa/" target="_new">https://www.sistani.org/arabic/qa/</a>&nbsp;or&nbsp;<br><a href="https://www.sistani.org/english/qa/" target="_new">https://www.sistani.org/english/qa/</a>&nbsp;or&nbsp;<a href="https://www.sistani.org/persian/qa/" target="_new">https://www.sistani.org/persian/qa/</a>&nbsp;or&nbsp;<br><a href="https://www.sistani.org/french/qa/" target="_new">https://www.sistani.org/french/qa/</a>&nbsp;or&nbsp;<a href="https://www.sistani.org/turkish/qa/" target="_new">https://www.sistani.org/turkish/qa/</a>&nbsp;or&nbsp;<br><a href="https://www.sistani.org/azari/qa/" target="_new">https://www.sistani.org/azari/qa/</a></p>
+</li>
+<li>
+<p><strong>Select the Desired Content:</strong> Locate the topic or content you want to extract from the website. Right-click on the content area or use Ctrl-Shift-C to open the browser's developer tools(inspct element) and select the content within the <code>&lt;div id="main-qa-content"&gt;...&lt;/div&gt;</code> element.</p>
+</li>
+<li>
+<p><strong>Copy the HTML Code:</strong> In the developer tools, right-click on the selected code, and choose the "Copy" option. This will copy the HTML code of the selected content to your clipboard.</p>
+</li>
+<li>
+<p><strong>Return to Your Text Area:</strong> Go back to the page or platform where you want to paste the extracted content. If you have a textarea where you want to paste the content, click inside the textarea to set the cursor.</p>
+</li>
+<li>
+<p><strong>Paste the HTML Code:</strong> Right-click inside the textarea or use Ctrl-V to paste the copied HTML code into the textarea. This will paste the entire code, including the <code>&lt;div id="main-qa-content"&gt;...&lt;/div&gt;</code> element.</p>
+</li>
+<li>
+<p><strong>Review and Modify (If Needed):</strong> The pasted text might include formatting, styles, and other elements from the original website. Depending on your use case, you might need to modify or clean up the code to suit your needs.</p>
+</li>
+</ol>
+  
+</div>
+  
+  <script>
+    document.getElementById("extract-button").addEventListener("click", function () {
+      var inputCode = document.getElementById("input-code").value;
+      var outputContainer = document.getElementById("output-container");
+      outputContainer.innerHTML = ""; // Clear previous output
+    
+    // Check if the textarea is empty
+    if (inputCode.trim() === "") {
+      alert("Please enter something in the textarea.");
+      return; // Exit the function
+    }
+
+      // Create a temporary div element to parse the input HTML code
+      var tempDiv = document.createElement("div");
+      tempDiv.innerHTML = inputCode;
+
+      // Extract Urdu text from <div class="one-qa"> elements
+      var oneQAElems = tempDiv.getElementsByClassName("one-qa");
+      for (var i = 0; i < oneQAElems.length; i++) {
+        var oneQA = oneQAElems[i];
+        
+        // Exclude <a> and <span> elements with specific classes
+        var aElements = oneQA.getElementsByTagName("a");
+        for (var j = 0; j < aElements.length; j++) {
+          aElements[j].remove();
+        }
+        var spanElements = oneQA.getElementsByClassName("disn");
+        for (var j = 0; j < spanElements.length; j++) {
+          spanElements[j].remove();
+        }
+
+        var extractedText = oneQA.textContent.trim();
+        // Add <br> tag
+		// Assuming extractedText contains the extracted content
+           extractedText = extractedText.replace(/جواب:|سوال:|السؤال:|الجواب:|پرسش:|پاسخ:|Question:|Answer:|Réponse:|Sual:|Cavab:|Cevap:|Soru:/g, function(match) 
+		   {
+		   return "<br>" + match;
+            });
+         //       extractedText = extractedText.replace(/جواب:/, "<br>جواب:").replace(/سوال:/, "<br>سوال:")
+		//		.replace(/Question:/,"<br>Question:").replace(/Answer:/,"<br>Answer:").replace(//,"").replace(//,"").replace(//,"")
+		//		.replace(//,"").replace(//,"");
+
+        
+        var outputText = document.createElement("div");
+        outputText.innerHTML = extractedText;
+        outputContainer.appendChild(outputText);
+      }
+    });
+
+    document.getElementById("copy-button").addEventListener("click", function () {
+      var outputContainer = document.getElementById("output-container");
+      var outputText = outputContainer.innerHTML;
+      
+      // Create a temporary textarea to copy the text to clipboard
+      var tempTextArea = document.createElement("textarea");
+      tempTextArea.innerHTML = outputText;
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempTextArea);
+
+    });
+  </script>
+  
+</body>
+</html>
