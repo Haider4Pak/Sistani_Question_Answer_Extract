@@ -39,7 +39,20 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
+	
+ #clear-button{
+      padding: 10px 20px;
+      background-color: #f55555;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+	
+	#clear-button:hover {
+      background-color: #ff0000;
+    }
+	
     button:hover {
       background-color: #0056b3;
     }
@@ -60,10 +73,14 @@
 <center><h1>Sistani Q&A Text Extractor</h1></center>
   <textarea id="input-code" rows="15" placeholder="Copy <div id=main-qa-content> from sistani.org Question Answer section and paste here..." ></textarea>
   <button id="extract-button">Text Extract</button>
+  <button id="paste-button">Paste from Clipboard</button>
     <button id="clear-button">Clear</button>
-
+	<br>
+	<hr>
+	<br>
+<center><button id="copy-button">Copy to Clipboard</button></center>
   <div id="output-container">Output here</div><br>
-  <button id="copy-button">Copy to Clipboard</button>
+  
   
   <br>
   <br>
@@ -143,6 +160,15 @@
 	 document.getElementById("clear-button").addEventListener("click", function () {
       // Clear the textarea content
       document.getElementById("input-code").value = "";
+    });
+
+     document.getElementById("paste-button").addEventListener("click", function () {
+      // Clear the textarea content and paste from clipboard
+      var textarea = document.getElementById("input-code");
+      textarea.value = ""; // Clear existing content
+      navigator.clipboard.readText().then(function(text) {
+        textarea.value = text;
+      });
     });
 
     document.getElementById("copy-button").addEventListener("click", function () {
